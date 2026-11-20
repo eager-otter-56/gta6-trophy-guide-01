@@ -1,25 +1,119 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida Legend — The GTA VI Trophy Guide &amp; Platinum Tracker</title>
+<meta name="description" content="An offline guide and checklist for all 55 Grand Theft Auto VI PlayStation 5 trophies: a five-stage platinum roadmap, missable warnings, kind and grade filters, a story-spoiler shield, and progress you can export and import.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+
+<header class="masthead">
+  <div class="masthead-row">
+    <div class="title-block">
+      <div class="crest" aria-hidden="true">VI</div>
+      <div>
+        <h1>Leonida Legend</h1>
+        <p class="subtitle">The GTA VI trophy guide &amp; platinum tracker — every one of the 55 PlayStation 5 trophies, explained and checkable.</p>
+      </div>
+    </div>
+
+    <section class="dashboard" aria-label="Completion dashboard">
+      <div class="dashboard-top">
+        <span class="dashboard-label">Trophies earned</span>
+        <span class="dashboard-numbers"><strong id="stat-earned">0</strong><span class="dashboard-of"> / 55</span></span>
+        <span class="dashboard-pct" id="stat-pct">0%</span>
+      </div>
+      <div class="meter" id="meter" role="progressbar" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" aria-label="Trophies earned">
+        <div class="meter-fill" id="meter-fill"></div>
+      </div>
+      <ul class="tally">
+        <li><i class="pip pip-platinum"></i>Platinum <b id="tally-platinum">0/1</b></li>
+        <li><i class="pip pip-gold"></i>Gold <b id="tally-gold">0/2</b></li>
+        <li><i class="pip pip-silver"></i>Silver <b id="tally-silver">0/6</b></li>
+        <li><i class="pip pip-bronze"></i>Bronze <b id="tally-bronze">0/46</b></li>
+      </ul>
+    </section>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
-<script type="module" src="app.js"></script>
+
+<main class="page">
+
+  <section class="panel road-panel" aria-labelledby="road-heading">
+    <h2 id="road-heading">The Road to the Platinum</h2>
+    <p class="panel-intro">Five stages, played in this order, keep every missable moment ahead of you instead of behind you. Clear a stage before moving on and the platinum — <em>Vice Got a Price!</em> — is waiting at the end of Stage 5.</p>
+    <ol class="road-list" id="road-list"></ol>
+  </section>
+
+  <section class="panel filter-panel" aria-labelledby="filter-heading">
+    <h2 id="filter-heading" class="sr-only">Filters and progress tools</h2>
+
+    <div class="filter-line">
+      <label class="field field-search">
+        <span class="sr-only">Search the trophies</span>
+        <input type="search" id="q" placeholder="Search a name, description or guide…" autocomplete="off">
+      </label>
+      <label class="field">Grade
+        <select id="grade-sel">
+          <option value="any">Any grade</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="field">Status
+        <select id="status-sel">
+          <option value="any">Any status</option>
+          <option value="done">Earned</option>
+          <option value="todo">Not earned yet</option>
+        </select>
+      </label>
+      <label class="shield-toggle">
+        <input type="checkbox" id="spoiler-box">
+        <span>Spoiler shield: hide story trophies until earned</span>
+      </label>
+    </div>
+
+    <nav class="chip-row" id="chip-row" aria-label="Filter by trophy kind">
+      <button type="button" class="chip chip-on" data-filter="any">All kinds</button>
+      <button type="button" class="chip" data-filter="story">Story</button>
+      <button type="button" class="chip chip-warn" data-filter="missable">Missable</button>
+      <button type="button" class="chip" data-filter="collectibles">Collectibles</button>
+      <button type="button" class="chip" data-filter="activities">Activities</button>
+      <button type="button" class="chip" data-filter="exploration">Exploration</button>
+      <button type="button" class="chip" data-filter="money">Money</button>
+      <button type="button" class="chip" data-filter="misc">Miscellaneous</button>
+    </nav>
+
+    <div class="action-row">
+      <button type="button" class="btn" id="btn-export">Export progress</button>
+      <label class="btn btn-file">Import progress
+        <input type="file" id="file-import" accept="application/json,.json" hidden>
+      </label>
+      <button type="button" class="btn btn-reset" id="btn-reset">Reset everything</button>
+      <span class="shown-count" id="shown-count" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section aria-labelledby="list-heading">
+    <div class="list-intro">
+      <h2 id="list-heading">The 55 Trophies</h2>
+      <p>Tick each trophy as you earn it — your progress saves itself in this browser. Open “How to earn it” on any card for the guide and its sources. With the spoiler shield on, story trophies stay sealed until you have earned them. Tip: press <kbd>/</kbd> anywhere on the page to jump straight to the search box.</p>
+      <p class="missable-banner" id="missable-banner"></p>
+    </div>
+    <div class="cards" id="card-grid"></div>
+    <p class="no-results" id="no-results" hidden>Nothing matches those filters. Clear the search or choose a different kind, grade or status.</p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p><strong>Where the facts come from.</strong> Trophy names, descriptions and grades are PlayStation's official list for Grand Theft Auto VI (PS5), as listed by Exophase — Grand Theft Auto VI (PS5) and PSNProfiles — GTA VI trophy list. Each card cites its sources; every guide is written in original words for this page, and the missable flags are reasoned from the wording of the official descriptions.</p>
+  <p>Leonida Legend is an unofficial fan-made guide. It is not affiliated with Rockstar Games or PlayStation, carries no official artwork or logos, and runs entirely offline.</p>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>

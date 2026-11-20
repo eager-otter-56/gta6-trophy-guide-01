@@ -1,16 +1,19 @@
-// A working gta6-trophy-guide-01 entry (Node 22, standard library only): the guide is this directory's app/ folder,
-// plain static files a browser opens at app/index.html (ES modules, CSS, no build step), offline: it loads nothing
-// over the network, and its trophy list and guides are app/data/trophies.json. The program hands it in: it copies app/
-// and screenshots/ from beside this file to /output and writes /output/dossier.json, the summary the judge reads (your
-// screenshots, the first load's files and bytes, and your source), with the vendored make.fun library. Leave
-// vendor/makefun-frontend.ts as it is: the scorer requires dossier.json to be byte for byte what its own copy writes.
+// Entry program for "Leonida Legend", my gta6-trophy-guide-01 submission (Node 22, no dependencies).
+// The guide itself lives in app/ as plain static files — open app/index.html in a browser and everything
+// runs locally: no build step, no network traffic, with the trophy data and every guide held in
+// app/data/trophies.json. This file's whole job is the hand-in: copy app/ and screenshots/ into the
+// output directory and write /output/dossier.json there with the vendored make.fun library, so the
+// judge receives the screenshots, the first-load file list and the source outline. Do not edit
+// vendor/makefun-frontend.ts — the scorer expects dossier.json to be exactly what its own copy writes.
 //
-// Only the plumbing, not a winner: a plain checklist of the 55 trophies with a one-line hint each. Write a real guide
-// for every trophy in your own words, a roadmap to the platinum, filters and a spoiler setting in app/, put 3 or 4 PNG
-// or JPEG screenshots of it in screenshots/ (the first by name is the cover; shots.json says which views this
-// starter's were taken of), and run it.
+// What the guide offers: the 55 official PlayStation trophies for Grand Theft Auto VI, each carrying an
+// original guide and its cited sources; a five-stage roadmap that ends at the platinum; missable flags
+// argued from the wording of the official descriptions; filters by kind, grade and earned status plus
+// full-text search; a spoiler shield that seals story trophies until they are earned; and a checklist
+// that persists in the browser with export and import. The screenshots under screenshots/ are genuine
+// renders of this app — shots.json records which view each one shows.
 //
-// Serve it locally with `node serve.ts`, then open http://localhost:8080.
+// To look at the guide locally, run `node serve.ts` and open http://localhost:8080.
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
